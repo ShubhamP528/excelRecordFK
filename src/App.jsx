@@ -14,7 +14,7 @@ function App() {
 
   const fetchRecords = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/records");
+      const res = await axios.get("https://excel-record-bk.vercel.app/records");
       setRecords(res.data);
     } catch (err) {
       alert("Failed to fetch records");
@@ -32,7 +32,10 @@ function App() {
     formData.append("file", file);
 
     try {
-      const res = await axios.post("http://localhost:5000/upload", formData);
+      const res = await axios.post(
+        "https://excel-record-bk.vercel.app/upload",
+        formData
+      );
       alert(res.data.message);
       setFile(null);
       e.target.reset();

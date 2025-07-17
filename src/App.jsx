@@ -3,6 +3,7 @@ import axios from "axios";
 
 function App() {
   const [file, setFile] = useState(null);
+  const [loading, setloading] = useState(false);
   const [records, setRecords] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,6 +33,7 @@ function App() {
     formData.append("file", file);
 
     try {
+      setloading(true);
       const res = await axios.post(
         "https://excel-record-bk.vercel.app/upload",
         formData
@@ -41,6 +43,8 @@ function App() {
       e.target.reset();
       fetchRecords();
     } catch (err) {
+      console.error(err);
+      setloading(false);
       alert("Upload failed");
     }
   };
@@ -84,10 +88,11 @@ function App() {
             className="flex-1 border rounded px-2 py-1"
           />
           <button
+            disabled={loading}
             type="submit"
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-2 sm:mt-0"
           >
-            Upload
+            {loading ? "Uploading" : "Upload"}
           </button>
         </form>
 
